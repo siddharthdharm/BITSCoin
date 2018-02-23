@@ -20,4 +20,9 @@ contract BITSCoin {
     	lastHalving = now;
     }
 
+    // Creating various events associated with the currency
+    event Transfer (address indexed from, address indexed to, uint256 value);
+    event Mint(address indexed from, uint256 value);
+
+
 }
