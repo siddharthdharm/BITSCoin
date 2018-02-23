@@ -25,7 +25,7 @@ contract BITSCoin {
     event Mint(address indexed from, uint256 value);
 
     //The updateAccount() method
-    function updateAccount() internal returns (unint 256){
+    function updateAccount() internal returns (uint256){
 
     	if(now - lastHalving >= 2100000 minutes) {
     		reward /= 2;                              // Halving the record after every 210000 minutes
@@ -89,36 +89,4 @@ contract BITSCoin {
 
         return true;
     }
-
-
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
