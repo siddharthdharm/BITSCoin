@@ -30,7 +30,7 @@ contract BITSCoin {
     		reward /= 2;                              // Halving the record after every 210000 minutes
     	}
 
-    	if (now - lastIncrease >= 150 seconds){
+    	if (now - lastIncrease >= 150 seconds){.      
 	        uint256 increaseAmount = ((now - lastIncrease) / 150 seconds) * reward;
 	        spendable_supply += increaseAmount;
 	        unspent_supply += increaseAmount;
@@ -68,6 +68,7 @@ contract BITSCoin {
 
     }
 
+    // Method to withdraw money from Ethereum
     function withdrawAmount(uint256 withdrawal_amount) public returns (bool) {
 
         require(balance[msg.sender] >= withdrawal_amount);
