@@ -11,7 +11,6 @@ contract BITSCoin {
 	uint256 public max_supply = 42000000000000;
     uint256 public unspent_supply = 0;
     uint256 public spendable_supply = 0;
-    uint256 public circulating_supply = 0;
     uint256 public decimals = 6;
     uint256 public reward = 50000000;
 
@@ -38,7 +37,6 @@ contract BITSCoin {
 	        lastIncrease = now;
       }
 
-      //circulating_supply = spendable_supply - unspent_supply;
       return (spendable_supply - unspent_supply);
     }
 
