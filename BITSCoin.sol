@@ -2,13 +2,13 @@ pragma solidity ^0.4.18;
 
 contract BITSCoin {
 
-	mapping (address => uint256) public balanceOf;
+	mapping (address => uint256) public balance;
 
 	string public name = "BITSCoin";
 	string public symbol = "BITS";
     uint256 public lastHalving = now;
     uint public lastIncrease = now;
-	uint256 public max_supply = 42000000000000;
+	uint256 public max_supply = 21000000000000;
     uint256 public unspent_supply = 0;
     uint256 public spendable_supply = 0;
     uint256 public decimals = 6;
@@ -43,10 +43,10 @@ contract BITSCoin {
 
     // Method for Transferring Coins
     function transfer(address _to, uint256 transfer_amount) public {
-        require(balanceOf[msg.sender] >= transfer_amount);           // Check if the sender has enough coins
-        require(balanceOf[_to] + transfer_amount >= balanceOf[_to]); // Check for overflows
-        balanceOf[_to] += transfer_amount;                           // Add coins to the recipient
-        balanceOf[msg.sender] -= transfer_amount;                    // Subtract coins from the sender
+        require(balance[msg.sender] >= transfer_amount);           // Check if the sender has enough coins
+        require(balance[_to] + transfer_amount >= balance[_to]); // Check for overflows
+        balance[_to] += transfer_amount;                           // Add coins to the recipient
+        balance[msg.sender] -= transfer_amount;                    // Subtract coins from the sender
         updateAccount();
 
         Transfer(msg.sender, _to, transfer_amount);                  // Transfer Completed Notification
@@ -55,13 +55,13 @@ contract BITSCoin {
 
     // Minting new coins by sending the currency - Ether
     function mint() public payable {
-        require(balanceOf[msg.sender] + _value >= balanceOf[msg.sender]); // Check for overflows
+        require(balance[msg.sender] + _value >= balance[msg.sender]); // Check for overflows
         uint256 _value = msg.value / 100000000;
         updateAccount();
 
         require(unspent_supply - _value <= unspent_supply);
         unspent_supply -= _value; // Remove from unspent supply
-        balanceOf[msg.sender] += _value; // Add the same to the recipient
+        balance[msg.sender] += _value; // Add the same to the recipient
         updateAccount();
 
         Mint(msg.sender, _value);                                    // Minting Completed Notification
@@ -70,11 +70,11 @@ contract BITSCoin {
 
     function withdrawAmount(uint256 withdrawal_amount) public returns (bool) {
 
-        require(balanceOf[msg.sender] >= withdrawal_amount);
-        require(balanceOf[msg.sender] - withdrawal_amount <= balanceOf[msg.sender]);
+        require(balance[msg.sender] >= withdrawal_amount);
+        require(balance[msg.sender] - withdrawal_amount <= balance[msg.sender]);
 
         // Balance checked in BITS (currency), then converted into Wei
-        balanceOf[msg.sender] -= withdrawal_amount;
+        balance[msg.sender] -= withdrawal_amount;
 
         // Added back to supply in BITS
         unspent_supply += withdrawal_amount;
