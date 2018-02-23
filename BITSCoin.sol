@@ -55,6 +55,22 @@ contract BITSCoin {
     }
 
 
+    // Minting new coins by sending the currency - Ether
+    function mint() public payable {
+        require(balanceOf[msg.sender] + _value >= balanceOf[msg.sender]); // Check for overflows
+        uint256 _value = msg.value / 100000000;
+        updateAccount();
+
+        require(unspent_supply - _value <= unspent_supply);
+        unspent_supply -= _value; // Remove from unspent supply
+        balanceOf[msg.sender] += _value; // Add the same to the recipient
+        updateAccount();
+
+        Mint(msg.sender, _value);                                    // Minting Completed Notification
+
+    }
+
+
 
 
 }
