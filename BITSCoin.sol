@@ -70,6 +70,26 @@ contract BITSCoin {
 
     }
 
+    function withdrawAmount(uint256 withdrawal_amount) public returns (bool) {
+
+        require(balanceOf[msg.sender] >= withdrawal_amount);
+        require(balanceOf[msg.sender] - withdrawal_amount <= balanceOf[msg.sender]);
+
+        // Balance checked in BITS (currency), then converted into Wei
+        balanceOf[msg.sender] -= withdrawal_amount;
+
+        // Added back to supply in BITS
+        unspent_supply += withdrawal_amount;
+        // Converted into Wei
+        withdrawal_amount *= 100000000;
+
+        // Transfered in Wei
+        msg.sender.transfer(withdrawal_amount);
+        updateAccount();
+
+        return true;
+    }
+
 
 
 
